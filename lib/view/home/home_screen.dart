@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:movieapp_flutter/common/super_scaffold.dart';
 import 'package:movieapp_flutter/utils/app_colors.dart';
@@ -73,6 +74,41 @@ class HomeScreen extends StatelessWidget {
                       ),
                     )
                   ],
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: CarouselSlider.builder(
+                  itemCount: 10,
+                  options: CarouselOptions(
+                    height: 300,
+                    // aspectRatio: 1 / .9,
+                    viewportFraction: 0.7,
+                    initialPage: 0,
+                    enableInfiniteScroll: true,
+                    autoPlay: true,
+                    autoPlayInterval: const Duration(seconds: 2),
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enlargeCenterPage: true,
+                    pageSnapping: true,
+                  ),
+                  itemBuilder: (BuildContext context, int itemIndex,
+                          int pageViewIndex) =>
+                      Container(
+                    clipBehavior: Clip.antiAlias,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+
+                    margin: const EdgeInsets.symmetric(horizontal: 1),
+                    width: 250,
+                    height: 300,
+                    // color: AppColor.primary,
+                    child: Image.asset(
+                      'assets/images/cat.jpg',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
                 ),
               )
             ],
