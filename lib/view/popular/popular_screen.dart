@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:movieapp_flutter/view/popular/popular_detail_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../common/super_scaffold.dart';
@@ -81,47 +82,50 @@ class PopularScreen extends StatelessWidget {
             sliver: SliverGrid.builder(
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisExtent: 300,
+                  mainAxisExtent: 310,
                   crossAxisSpacing: 5,
                   mainAxisSpacing: 10),
               itemCount: controller.movieData?.results?.length,
               itemBuilder: (BuildContext context, int index) {
                 final individualMovieData =
                     controller.movieData?.results?[index];
-                return Container(
-                  // width: 40.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // color: AppColor.grey,
+                return GestureDetector(
+                  onTap: () => Get.to(
+                    const PopularDetailScreen(),
                   ),
-                  margin: EdgeInsets.symmetric(horizontal: 3.w),
-                  child: Column(
-                    children: [
-                      ClipRRect(
-                          borderRadius: BorderRadius.circular(10),
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                'https://image.tmdb.org/t/p/w500/${individualMovieData?.posterPath}',
-                            fit: BoxFit.cover,
-                          )),
-                      SizedBox(
-                        height: 3.w,
-                      ),
-                      Text(
-                        '${individualMovieData?.originalTitle}',
-                        style: TextStyle(
-                            color: AppColor.white,
-                            fontWeight: FontWeight.w500,
-                            fontSize: AppValues.extraSmallText),
-                      ),
-                      Text(
-                        '${individualMovieData?.releaseDate}',
-                        style: TextStyle(
-                            color: AppColor.secondary,
-                            fontWeight: FontWeight.w200,
-                            fontSize: AppValues.extraSmallText),
-                      )
-                    ],
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    margin: EdgeInsets.symmetric(horizontal: 3.w),
+                    child: Column(
+                      children: [
+                        ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  'https://image.tmdb.org/t/p/w500/${individualMovieData?.posterPath}',
+                              fit: BoxFit.cover,
+                            )),
+                        SizedBox(
+                          height: 3.w,
+                        ),
+                        Text(
+                          '${individualMovieData?.originalTitle}',
+                          style: TextStyle(
+                              color: AppColor.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: AppValues.extraSmallText),
+                        ),
+                        Text(
+                          '${individualMovieData?.releaseDate}',
+                          style: TextStyle(
+                              color: AppColor.secondary,
+                              fontWeight: FontWeight.w200,
+                              fontSize: AppValues.extraSmallText),
+                        )
+                      ],
+                    ),
                   ),
                 );
               },
