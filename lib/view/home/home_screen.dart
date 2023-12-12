@@ -6,6 +6,7 @@ import 'package:movieapp_flutter/common/super_scaffold.dart';
 import 'package:movieapp_flutter/controller/movie_controller.dart';
 import 'package:movieapp_flutter/utils/app_colors.dart';
 import 'package:movieapp_flutter/utils/app_values.dart';
+import 'package:movieapp_flutter/view/popular/popular_screen.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -14,7 +15,6 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SuperScaffold(
-      topColor: AppColor.black,
       child: Scaffold(
         backgroundColor: AppColor.black,
         body: Padding(
@@ -69,7 +69,9 @@ class HomeScreen extends StatelessWidget {
                               fontSize: AppValues.smallText),
                         ),
                         TextButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(const PopularScreen());
+                          },
                           child: Text(
                             'See All',
                             style: TextStyle(

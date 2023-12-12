@@ -7,4 +7,5 @@ class AppColor {
   static Color grey = const Color(0xffB0B0B0);
   static Color primaryDark = const Color(0xff1D566E);
   static Color primaryGradient = const Color(0xff1D56E6);
+  static Color secondary = const Color(0xffFF4A4A);
 }
