@@ -68,12 +68,12 @@ class MovieController extends GetxController {
         // print(
         // 'Movie Data is___________ ${movieData?.results?.map((e) => e.originalTitle)}');
 
-        fetchLoadingStatus = ApiStatus.succeed;
+        fetchMoreLoadingStatus = ApiStatus.succeed;
         update();
       }
     } catch (e) {
       print(e.toString());
-      fetchLoadingStatus = ApiStatus.failure;
+      fetchMoreLoadingStatus = ApiStatus.failure;
       update();
     }
   }

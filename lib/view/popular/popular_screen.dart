@@ -9,14 +9,9 @@ import '../../controller/movie_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/app_values.dart';
 
-class PopularScreen extends StatefulWidget {
+class PopularScreen extends StatelessWidget {
   const PopularScreen({super.key});
 
-  @override
-  State<PopularScreen> createState() => _PopularScreenState();
-}
-
-class _PopularScreenState extends State<PopularScreen> {
   @override
   Widget build(BuildContext context) {
     return SuperScaffold(
