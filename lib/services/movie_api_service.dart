@@ -8,7 +8,7 @@ class MovieApiService {
         endPoint: '/3/movie/popular',
         query: {
           "language": "en-US",
-          "page": "1",
+          "page": page,
           "api_key": "625a3cb291fc8eb4f0afa7b3d8c93ba6"
         });
     print('Response data is $response');

@@ -84,44 +84,45 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
-                  SizedBox(
-                    width: double.infinity,
-                    child: CarouselSlider.builder(
-                      itemCount: controller.movieData?.results?.length,
-                      options: CarouselOptions(
-                        height: 300,
-                        // aspectRatio: 1 / .9,
-                        viewportFraction: 0.55,
-                        // initialPage: 0,
-                        enableInfiniteScroll: true,
-                        autoPlay: true,
-                        autoPlayInterval: const Duration(seconds: 2),
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enlargeCenterPage: true,
-                        pageSnapping: true,
-                      ),
-                      itemBuilder: (BuildContext context, int itemIndex,
-                          int pageViewIndex) {
-                        final individualMovieData =
-                            controller.movieData?.results?[itemIndex];
-                        return Container(
-                          clipBehavior: Clip.antiAlias,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(12),
-                          ),
-                          margin: const EdgeInsets.symmetric(horizontal: 2),
-                          width: 200,
+                  if (controller.fetchLoadingStatus == ApiStatus.succeed)
+                    SizedBox(
+                      width: double.infinity,
+                      child: CarouselSlider.builder(
+                        itemCount: controller.movieData?.results?.length,
+                        options: CarouselOptions(
                           height: 300,
-                          // color: AppColor.primary,
-                          child: CachedNetworkImage(
-                            fit: BoxFit.cover,
-                            imageUrl:
-                                'https://image.tmdb.org/t/p/w500/${individualMovieData?.posterPath}',
-                          ),
-                        );
-                      },
-                    ),
-                  )
+                          // aspectRatio: 1 / .9,
+                          viewportFraction: 0.55,
+                          // initialPage: 0,
+                          enableInfiniteScroll: true,
+                          autoPlay: true,
+                          autoPlayInterval: const Duration(seconds: 2),
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enlargeCenterPage: true,
+                          pageSnapping: true,
+                        ),
+                        itemBuilder: (BuildContext context, int itemIndex,
+                            int pageViewIndex) {
+                          final individualMovieData =
+                              controller.movieData?.results?[itemIndex];
+                          return Container(
+                            clipBehavior: Clip.antiAlias,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(12),
+                            ),
+                            margin: const EdgeInsets.symmetric(horizontal: 2),
+                            width: 200,
+                            height: 300,
+                            // color: AppColor.primary,
+                            child: CachedNetworkImage(
+                              fit: BoxFit.cover,
+                              imageUrl:
+                                  'https://image.tmdb.org/t/p/w500/${individualMovieData?.posterPath}',
+                            ),
+                          );
+                        },
+                      ),
+                    )
                 ],
               );
             },
