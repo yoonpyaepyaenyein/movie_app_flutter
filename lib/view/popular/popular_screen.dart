@@ -91,7 +91,9 @@ class PopularScreen extends StatelessWidget {
                     controller.movieData?.results?[index];
                 return GestureDetector(
                   onTap: () => Get.to(
-                    const PopularDetailScreen(),
+                    () => PopularDetailScreen(
+                      movieId: "${individualMovieData!.id}",
+                    ),
                   ),
                   child: Container(
                     decoration: BoxDecoration(

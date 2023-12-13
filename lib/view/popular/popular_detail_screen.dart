@@ -1,39 +1,75 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:movieapp_flutter/controller/movie_detail_controller.dart';
 import 'package:movieapp_flutter/utils/app_values.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 import '../../utils/app_colors.dart';
 
 class PopularDetailScreen extends StatelessWidget {
-  const PopularDetailScreen({super.key});
+  final String movieId;
+  const PopularDetailScreen({super.key, required this.movieId});
 
   @override
   Widget build(BuildContext context) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      var statusController = Get.find<MovieDetailController>();
+      statusController.getMovieDetail(movieId);
+    });
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
     ));
     return Scaffold(
       extendBodyBehindAppBar: true,
-      body: Stack(
-        children: [
-          ..._buildBackground(context),
-          _buildMovieInformation(context),
-        ],
+      body: GetBuilder<MovieDetailController>(
+        builder: (MovieDetailController controller) {
+          return Stack(
+            children: [
+              ..._buildBackground(context, controller),
+              _buildMovieInformation(context, controller),
+              Positioned(
+                top: 30,
+                child: IconButton(
+                  onPressed: () => Get.back(),
+                  icon: Icon(
+                    CupertinoIcons.chevron_back,
+                    color: AppColor.white,
+                    size: 26,
+                  ),
+                ),
+              ),
+              Positioned(
+                top: 30,
+                right: 6,
+                child: IconButton(
+                  onPressed: () => print('Favorite'),
+                  icon: Icon(
+                    Icons.favorite_border_outlined,
+                    color: AppColor.secondary,
+                    size: 26,
+                  ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }
 
-  Positioned _buildMovieInformation(BuildContext context) {
+  Positioned _buildMovieInformation(
+      BuildContext context, MovieDetailController controller) {
     return Positioned(
       bottom: 150,
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
           Text(
-            'Movie Title',
+            "${controller.movieDetailData?.originalTitle}",
             style: TextStyle(
                 color: AppColor.white,
                 fontSize: AppValues.mediumText,
@@ -44,7 +80,11 @@ class PopularDetailScreen extends StatelessWidget {
             height: 4.w,
           ),
           Text(
-            'Released | 2023-11-17 | 102 min',
+            "${controller.movieDetailData?.status}"
+            " | "
+            "${controller.movieDetailData?.releaseDate}"
+            " | "
+            "${controller.movieDetailData?.runtime} min",
             style: TextStyle(
               color: AppColor.white,
               fontSize: AppValues.smallText,
@@ -56,7 +96,7 @@ class PopularDetailScreen extends StatelessWidget {
           Padding(
             padding: EdgeInsets.symmetric(horizontal: 3.w),
             child: Text(
-              'Lorem ipsum, or lipsum as it is sometimes known, is dummy text used in laying out print, graphic or web designs. The passage is attributed to an unknown typesetter in the 15th century who is thought to have scrambled parts of Cicero ,for use in a type specimen book. It usually begins with:',
+              "${controller.movieDetailData?.overview}",
               maxLines: 8,
               style: Theme.of(context).textTheme.bodySmall!.copyWith(
                   height: 1.75,
@@ -70,40 +110,20 @@ class PopularDetailScreen extends StatelessWidget {
     );
   }
 
-  List<Widget> _buildBackground(context) {
+  List<Widget> _buildBackground(
+      BuildContext context, MovieDetailController controller) {
     return [
       Container(
         height: double.infinity,
         color: AppColor.black,
       ),
-      Image.asset(
-        'assets/images/cat.jpg',
+      CachedNetworkImage(
+        imageUrl:
+            'https://image.tmdb.org/t/p/w500/${controller.movieDetailData?.backdropPath}',
         width: double.infinity,
         height: MediaQuery.of(context).size.height * 0.5,
         fit: BoxFit.cover,
-      ),
-      Positioned(
-        top: 20,
-        child: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.arrow_back,
-            color: AppColor.white,
-            size: 26,
-          ),
-        ),
-      ),
-      Positioned(
-        top: 22,
-        right: 6,
-        child: IconButton(
-          onPressed: () => Get.back(),
-          icon: Icon(
-            Icons.favorite_border_outlined,
-            color: AppColor.secondary,
-            size: 26,
-          ),
-        ),
+        filterQuality: FilterQuality.high,
       ),
       Positioned.fill(
         child: DecoratedBox(

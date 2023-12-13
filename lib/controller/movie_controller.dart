@@ -28,7 +28,7 @@ class MovieController extends GetxController {
     try {
       http.Response response = await MovieApiService.getMovies(
           language: 'en-US', page: page.toString());
-      // print('RESPONSE ___________, ${response.body}');
+      print('RESPONSE ___________, ${response.body}');
       if (response.statusCode == 200) {
         var result = jsonDecode(response.body);
         MovieList movieList = MovieList.fromJson(result);

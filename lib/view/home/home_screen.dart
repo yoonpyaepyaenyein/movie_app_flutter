@@ -119,6 +119,7 @@ class HomeScreen extends StatelessWidget {
                               imageUrl:
                                   'https://image.tmdb.org/t/p/w500/${individualMovieData?.posterPath}',
                             ),
+                            
                           );
                         },
                       ),
